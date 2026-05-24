@@ -1,0 +1,13 @@
+{
+  "name": "lennon-bar-mitsvah-invitation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Invitation digitale interactive pour la Bar Mitsvah de Lennon Lillo.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18"
+  }
+}
