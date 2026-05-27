@@ -4,9 +4,9 @@
   --gold-deep: #7d5318;
   --ink: #15110c;
   --cream: rgba(255, 252, 245, 0.9);
-  --glass: rgba(255, 255, 255, 0.85);
+  --glass: rgba(255, 255, 255, 0.87);
   --line: rgba(205, 158, 72, 0.52);
-  --shadow: 0 30px 80px rgba(17, 10, 4, 0.38);
+  --shadow: 0 28px 75px rgba(17, 10, 4, 0.35);
 }
 
 * {
@@ -15,23 +15,16 @@
 
 html {
   min-width: 320px;
-  height: 100%;
   background: #120f0b;
-  overflow: hidden;
 }
 
 body {
-  position: fixed;
-  inset: 0;
   margin: 0;
   min-width: 320px;
-  width: 100%;
-  height: var(--app-height, 100dvh);
   color: #fff;
   font-family: Inter, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
   -webkit-font-smoothing: antialiased;
-  overflow: hidden;
-  overscroll-behavior: none;
+  overflow-x: hidden;
 }
 
 button,
@@ -45,182 +38,191 @@ a {
 }
 
 .cover {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(174, 126, 43, 0.3), transparent 34%),
+    linear-gradient(180deg, #19120b 0%, #0f0b08 54%, #070504 100%);
+}
+
+.cover::before {
+  content: "";
   position: fixed;
   inset: 0;
-  height: auto;
-  max-height: var(--app-height, 100dvh);
-  overflow: hidden;
-  background: #120f0b;
+  z-index: 0;
+  background:
+    linear-gradient(rgba(10, 7, 4, 0.28), rgba(10, 7, 4, 0.36)),
+    url("photo.png") center / cover no-repeat;
+  filter: blur(18px) saturate(1.08);
+  transform: scale(1.08);
 }
 
 .cover-photo {
   position: fixed;
   inset: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 45% 44%;
-  filter: saturate(1.08) contrast(1.06);
-  transform: scale(1.01);
+  object-fit: contain;
+  object-position: 50% 50%;
+  filter: saturate(1.06) contrast(1.04);
 }
 
 .photo-shade {
   position: fixed;
   inset: 0;
+  z-index: 2;
   background:
-    linear-gradient(180deg, rgba(12, 8, 4, 0.28) 0%, rgba(12, 8, 4, 0.1) 35%, rgba(12, 8, 4, 0.46) 100%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.34) 0%, transparent 44%, rgba(0, 0, 0, 0.28) 100%);
+    linear-gradient(180deg, rgba(14, 8, 3, 0.12) 0%, rgba(14, 8, 3, 0.03) 34%, rgba(14, 8, 3, 0.38) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0%, transparent 42%, rgba(0, 0, 0, 0.28) 100%);
   pointer-events: none;
 }
 
 .editorial-layer {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  height: auto;
-  max-height: var(--app-height, 100dvh);
-  overflow: hidden;
+  position: relative;
+  z-index: 3;
+  min-height: 100%;
   padding: max(16px, env(safe-area-inset-top)) clamp(16px, 4vw, 54px) max(18px, env(safe-area-inset-bottom));
 }
 
-.masthead {
-  display: grid;
-  gap: 2px;
-  text-align: center;
-  pointer-events: none;
-}
-
-.issue-line {
-  margin: 0;
-  color: rgba(255, 242, 210, 0.88);
-  font-size: clamp(10px, 1.3vw, 14px);
-  font-weight: 800;
-  letter-spacing: 0.23em;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
-}
-
-.masthead h1 {
-  margin: 0;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(64px, 16.2vw, 218px);
-  line-height: 0.78;
-  font-weight: 900;
-  letter-spacing: 0;
-  color: transparent;
-  background:
-    linear-gradient(112deg, #70430e 4%, #d6972c 16%, #fff1b8 34%, #bd8128 50%, #f8d77d 67%, #8b5a17 83%, #fff4c8 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.42));
-}
-
-.left-stories,
-.right-headline {
+.top-kicker {
   position: absolute;
-  z-index: 2;
-  text-shadow: 0 3px 16px rgba(0, 0, 0, 0.65);
-}
-
-.left-stories {
-  top: clamp(150px, 27vh, 310px);
-  left: clamp(18px, 4vw, 58px);
-  display: grid;
-  gap: 18px;
-  width: min(210px, 32vw);
-}
-
-.left-stories p {
+  top: max(18px, env(safe-area-inset-top));
+  left: 50%;
   margin: 0;
-  color: rgba(255, 255, 255, 0.88);
-  font-size: clamp(10px, 1.15vw, 13px);
-  line-height: 1.36;
-  font-weight: 700;
-}
-
-.left-stories span {
-  display: block;
-  margin-bottom: 4px;
-  color: var(--gold-light);
+  color: rgba(255, 226, 158, 0.96);
   font-family: Cinzel, Georgia, serif;
-  font-size: clamp(15px, 2vw, 24px);
-  line-height: 1;
-}
-
-.right-headline {
-  top: clamp(150px, 25vh, 290px);
-  right: clamp(18px, 4vw, 62px);
-  width: min(250px, 34vw);
-  text-align: right;
-}
-
-.right-headline p {
-  margin: 0;
-  color: var(--gold-light);
-  font-family: Cinzel, Georgia, serif;
-  font-size: clamp(32px, 5.2vw, 82px);
-  line-height: 0.86;
+  font-size: clamp(16px, 2.1vw, 28px);
   font-weight: 800;
+  letter-spacing: 0.22em;
+  line-height: 1;
+  text-align: center;
+  text-shadow:
+    0 2px 14px rgba(0, 0, 0, 0.72),
+    0 0 24px rgba(255, 225, 154, 0.36);
+  transform: translateX(-50%);
+  white-space: nowrap;
 }
 
 .invitation-card {
   position: absolute;
-  z-index: 3;
   left: 50%;
-  bottom: clamp(10px, 2.5vh, 24px);
-  width: min(660px, 100%);
-  margin: 0;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 3;
+  width: min(690px, calc(100vw - 28px));
+  max-height: calc(100svh - 30px);
+  padding: clamp(16px, 2.4vw, 26px);
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  border: 1px solid rgba(255, 225, 154, 0.58);
+  border-radius: clamp(28px, 4vw, 44px);
+  background: rgba(255, 253, 247, 0.34);
+  box-shadow: 0 28px 80px rgba(10, 5, 2, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.52);
   transform: translateX(-50%);
-  padding: clamp(16px, 2vw, 24px);
-  border: 1px solid var(--line);
-  border-radius: clamp(34px, 5vw, 58px);
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 250, 238, 0.82)),
-    var(--glass);
-  box-shadow:
-    var(--shadow),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92),
-    inset 0 -18px 46px rgba(199, 148, 53, 0.08);
-  backdrop-filter: blur(14px) saturate(132%);
-  -webkit-backdrop-filter: blur(14px) saturate(132%);
+  backdrop-filter: blur(20px) saturate(135%);
+  -webkit-backdrop-filter: blur(20px) saturate(135%);
   color: var(--ink);
   text-align: center;
+  text-shadow: 0 1px 18px rgba(255, 255, 255, 0.44);
+}
+
+.invitation-card::-webkit-scrollbar {
+  display: none;
+}
+
+.invitation-card[open] {
+  background: rgba(255, 253, 247, 0.48);
+  box-shadow: 0 30px 90px rgba(10, 5, 2, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+}
+
+.invitation-summary {
+  display: grid;
+  gap: 5px;
+  justify-items: center;
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.invitation-summary::-webkit-details-marker {
+  display: none;
+}
+
+.invitation-panel {
+  display: grid;
+  justify-items: center;
+  padding-top: clamp(14px, 2.2vw, 20px);
 }
 
 .star {
-  color: var(--gold);
-  font-size: clamp(28px, 3vw, 36px);
+  display: block;
+  color: #8b5a1b;
+  font-size: clamp(30px, 4vw, 46px);
   line-height: 1;
+  text-shadow: 0 1px 12px rgba(255, 255, 255, 0.74), 0 2px 10px rgba(0, 0, 0, 0.16);
 }
 
 .card-kicker {
-  margin: 8px 0 12px;
-  color: var(--gold-deep);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #5d390f;
   font-family: Cinzel, Georgia, serif;
-  font-size: clamp(12px, 1.4vw, 17px);
+  font-size: clamp(13px, 1.55vw, 18px);
   font-weight: 800;
   letter-spacing: 0.24em;
+  line-height: 1;
+  text-shadow: 0 1px 12px rgba(255, 255, 255, 0.76);
 }
 
-.invitation-card h2 {
-  margin: 0;
+.card-kicker::before,
+.card-kicker::after {
+  content: "";
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  opacity: 0.58;
+  animation: cuePulse 1.7s ease-in-out infinite;
+}
+
+.card-kicker::before {
+  transform: rotate(-135deg);
+}
+
+.card-kicker::after {
+  transform: rotate(45deg);
+  animation-delay: 0.28s;
+}
+
+.card-title {
+  display: block;
   font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(42px, 6.6vw, 72px);
-  line-height: 0.86;
+  font-size: clamp(56px, 9vw, 114px);
+  font-weight: 900;
+  line-height: 0.82;
   color: transparent;
-  background: linear-gradient(120deg, #724611, #c58a2f 30%, #f8d47c 52%, #8f5b18 82%);
+  background: linear-gradient(115deg, #372006 0%, #9a641a 28%, #fff0a9 48%, #9b641a 68%, #3e2507 100%);
   -webkit-background-clip: text;
   background-clip: text;
   letter-spacing: 0;
+  filter:
+    drop-shadow(0 2px 10px rgba(255, 255, 255, 0.76))
+    drop-shadow(0 4px 12px rgba(42, 24, 6, 0.5));
 }
 
 .invite-copy {
-  margin: 0 auto 16px;
-  max-width: 510px;
-  color: rgba(21, 17, 12, 0.82);
+  margin: 0 auto 18px;
+  max-width: 640px;
+  color: rgba(21, 17, 12, 0.92);
   font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(18px, 1.9vw, 24px);
-  line-height: 1.22;
+  font-size: clamp(17px, 2vw, 24px);
+  line-height: 1.26;
   font-weight: 700;
 }
 
@@ -229,16 +231,15 @@ a {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   width: min(430px, 100%);
-  margin: 0 auto 12px;
+  margin: 0 auto 18px;
 }
 
 .details-grid div {
-  min-height: 58px;
-  padding: 10px;
+  min-height: 74px;
+  padding: 12px;
   border: 1px solid rgba(183, 128, 37, 0.22);
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.62);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  background: rgba(255, 255, 255, 0.38);
 }
 
 .details-grid span,
@@ -256,20 +257,20 @@ address span {
   margin-top: 7px;
   color: var(--gold-deep);
   font-family: Cinzel, Georgia, serif;
-  font-size: clamp(19px, 2.3vw, 26px);
+  font-size: clamp(20px, 3vw, 32px);
   line-height: 1;
 }
 
 address {
   display: grid;
-  gap: 4px;
-  margin: 0 auto 14px;
+  gap: 6px;
+  margin: 0 auto 22px;
   color: var(--ink);
   font-style: normal;
 }
 
 address strong {
-  color: var(--gold-deep);
+  color: #5d390f;
   font-size: clamp(12px, 1.7vw, 16px);
   letter-spacing: 0.08em;
 }
@@ -280,7 +281,7 @@ address span {
 
 .actions {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   width: min(440px, 100%);
   margin: 0 auto;
 }
@@ -292,7 +293,7 @@ address span {
   justify-content: center;
   gap: 10px;
   width: 100%;
-  min-height: 46px;
+  min-height: 54px;
   padding: 0 18px;
   border-radius: 999px;
   border: 1px solid rgba(183, 128, 37, 0.48);
@@ -322,22 +323,22 @@ address span {
 
 .confirm {
   color: var(--gold-deep);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 250, 240, 0.78));
-  box-shadow: 0 12px 28px rgba(120, 80, 28, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow: 0 12px 28px rgba(120, 80, 28, 0.14);
 }
 
 .agenda,
 .submit-btn {
   color: #221608;
-  background: linear-gradient(135deg, #fff0b8, #d7a247 43%, #8a5a18 100%);
-  box-shadow: 0 16px 34px rgba(157, 105, 31, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  background: linear-gradient(135deg, #ffedb6, #d3a043 44%, #8c5d1d 100%);
+  box-shadow: 0 15px 32px rgba(157, 105, 31, 0.25);
 }
 
 .waze {
   color: var(--gold-light);
   border-color: rgba(255, 225, 154, 0.32);
-  background: linear-gradient(135deg, #211b13, #040302);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 225, 154, 0.08);
+  background: linear-gradient(135deg, #1a1713, #050403);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
 }
 
 .modal {
@@ -473,9 +474,20 @@ fieldset[disabled] {
   to { transform: rotate(360deg); }
 }
 
+@keyframes cuePulse {
+  0%, 100% {
+    opacity: 0.38;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+}
+
 @media (max-width: 720px) {
   .cover-photo {
-    object-position: 42% 38%;
+    object-fit: cover;
+    object-position: 45% 50%;
   }
 
   .photo-shade {
@@ -485,112 +497,46 @@ fieldset[disabled] {
   }
 
   .editorial-layer {
-    padding: max(10px, env(safe-area-inset-top)) 12px max(10px, env(safe-area-inset-bottom));
-  }
-
-  .issue-line {
-    letter-spacing: 0.16em;
-  }
-
-  .masthead h1 {
-    font-size: clamp(55px, 20vw, 88px);
-  }
-
-  .left-stories {
-    top: 114px;
-    width: 136px;
-    gap: 8px;
-  }
-
-  .left-stories p {
-    font-size: 9px;
-  }
-
-  .left-stories span {
-    font-size: 13px;
-  }
-
-  .right-headline {
-    top: 116px;
-    width: 138px;
-  }
-
-  .right-headline p {
-    font-size: clamp(15px, 5.1vw, 23px);
+    padding-inline: 13px;
   }
 
   .invitation-card {
-    padding: 12px 12px 11px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: min(430px, calc(100vw - 22px));
+    max-height: calc(100svh - 22px);
+    padding: 16px 13px;
     border-radius: 30px;
   }
 
-  .star {
-    font-size: 24px;
+  .card-title {
+    font-size: clamp(46px, 14vw, 70px);
   }
 
   .card-kicker {
-    margin: 5px 0 3px;
-    font-size: 11px;
-    letter-spacing: 0.22em;
+    font-size: 12px;
+    gap: 7px;
   }
 
-  .invitation-card h2 {
-    font-size: clamp(34px, 10.7vw, 43px);
-  }
-
-  .invite-copy {
-    margin: 8px auto 10px;
-    font-size: 14px;
-    line-height: 1.14;
+  .card-kicker::before,
+  .card-kicker::after {
+    width: 6px;
+    height: 6px;
+    border-width: 1.5px;
   }
 
   .details-grid {
-    gap: 7px;
-    margin-bottom: 9px;
+    gap: 8px;
   }
 
   .details-grid div {
-    min-height: 50px;
-    padding: 8px;
-    border-radius: 18px;
-  }
-
-  .details-grid span,
-  address span {
-    font-size: 9px;
-    letter-spacing: 0.15em;
-  }
-
-  .details-grid strong {
-    margin-top: 4px;
-    font-size: 20px;
-  }
-
-  address {
-    gap: 3px;
-    margin-bottom: 10px;
-  }
-
-  address strong {
-    font-size: 10px;
-    line-height: 1.15;
-  }
-
-  .actions {
-    gap: 6px;
+    min-height: 66px;
+    border-radius: 19px;
   }
 
   .action-btn,
   .submit-btn {
-    min-height: 40px;
-    padding-inline: 10px;
-    font-size: 10px;
-  }
-
-  .action-btn svg {
-    width: 16px;
-    height: 16px;
-    flex-basis: 16px;
+    min-height: 52px;
+    padding-inline: 12px;
   }
 
   .modal-card {
@@ -599,15 +545,15 @@ fieldset[disabled] {
 }
 
 @media (max-width: 390px) {
-  .left-stories p:nth-child(2) {
-    display: none;
+  .invitation-card {
+    padding-inline: 12px;
   }
 
-  .invitation-card h2 {
-    font-size: 35px;
+  .card-title {
+    font-size: clamp(42px, 13vw, 54px);
   }
 
   .invite-copy {
-    font-size: 13px;
+    font-size: 16px;
   }
 }

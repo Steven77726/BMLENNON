@@ -2,8 +2,22 @@ setAppHeight();
 window.addEventListener("resize", setAppHeight);
 window.visualViewport?.addEventListener("resize", setAppHeight);
 
+const coverPhoto = document.querySelector(".cover-photo");
+if (coverPhoto) {
+  coverPhoto.addEventListener(
+    "error",
+    () => {
+      if (!coverPhoto.dataset.fallback) {
+        coverPhoto.dataset.fallback = "true";
+        coverPhoto.src = "assets/lennon/portrait.png";
+      }
+    },
+    { once: true }
+  );
+}
+
 const INVITE_COPY_HTML =
-  "À l'occasion de sa Bar Mitsvah, Lennon a le plaisir de vous inviter<br>pour la pose de ses téphilines le lundi 15 juin.<br>Suivie d'un brunch.";
+  "À l’occasion de sa Bar Mitsvah, Lennon a le plaisir de vous inviter<br>à la pose de ses téphilines le lundi 15 juin,<br>suivie d’un petit-déjeuner.";
 
 applyInviteCopy();
 window.addEventListener("pageshow", applyInviteCopy);
@@ -13,7 +27,7 @@ const EVENT = {
   title: "Bar Mitsvah de Lennon",
   start: "20260615T083000",
   end: "20260615T113000",
-  location: "Association Israélite Culturelle de Pantin, 8 Rue Gambetta, 93500 Pantin",
+  location: "Synagogue de Pantin, 8 Rue Gambetta, 93500 Pantin",
   description: "Invitation à la Bar Mitsvah de Lennon."
 };
 
